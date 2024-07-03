@@ -3,7 +3,6 @@ import time
 import os
 import playsound
 from gtts import gTTS
-import random
 import speech_recognition as sr
 import pyautogui
 
@@ -37,6 +36,7 @@ class Alexa():
             return text
         except sr.UnknownValueError:
             print("Could not understand audio")
+            return 0
         except sr.RequestError as e:
             print(f"Error fetching results; {e}")
 
@@ -51,12 +51,15 @@ class Alexa():
         self.Alexa_Speak("my_file.mp3")
         os.system("rm my_file.mp3")
         
-    def Alexa_TD(self):
+    def Alexa_TD(self,x):
         current_time_struct = time.localtime()
         formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", current_time_struct)
         day=formatted_time.split()[0]
         t=formatted_time.split()[1]
-        self.text_to_sound("اليوم هو "+day+" و الساعة الان هي "+t,"my_file.mp3")
+        if(x=='D'):
+            self.text_to_sound("اليوم هو "+day,"my_file.mp3")
+        elif(x=='T'):
+            self.text_to_sound("الساعة هي "+t,"my_file.mp3")
         self.Alexa_Speak("my_file.mp3")
         os.system("rm my_file.mp3")
         
@@ -77,6 +80,9 @@ class Alexa():
         os.system("git remote add origin repo https://github.com/Omar-Talaat11/Python-practice.git")
         os.system("git push -u origin main")
         
+    def Alexa_Open_GIT(self):
+        webbrowser.get('firefox').open("https://github.com/Omar-Talaat11")
+        
         
         
         
@@ -87,9 +93,12 @@ class Alexa():
         if(self.find_words(["صباح","خير"],speech)):
             self.Alexa_GM()
             
-        if(self.find_words(["يوم","ساعه","تاريخ"],speech)):
-            self.Alexa_TD()
-            
+        if(self.find_words(["يوم","تاريخ","النهارده"],speech)):
+            self.Alexa_TD('D')
+        
+        if(self.find_words(["الساعه","الوقت"],speech)):
+            self.Alexa_TD('T')
+             
         if(self.find_words(["شات","ج ب ت"],speech)):
             self.Alexa_Open_CGPT()
             
@@ -99,10 +108,11 @@ class Alexa():
         if(self.find_words(["تيرمينال"],speech)):
             self.Alexa_Terminal()
             
-        if(self.find_words(["كوميت","جيت","جيتهب"],speech)):
+        if(self.find_words(["كوميت","كومنت"],speech) and self.find_words(["جيت","جيتهب"],speech)):
             self.Alexa_GIT_Commit()
             
-    
+        if(self.find_words(["افتح"],speech) and self.find_words(["جيت","جيتهب"],speech)):
+            self.Alexa_Open_GIT()
     
 
         
@@ -112,10 +122,9 @@ class Alexa():
 
 alexa=Alexa()
 
-
-
 while 1:
     recognizer = sr.Recognizer()
     alexa=Alexa()
     recognized_text = alexa.Alexa_recognize_speech()
-    alexa.Alexa_Respond(recognized_text)
+    if(recognized_text):
+        alexa.Alexa_Respond(recognized_text)
