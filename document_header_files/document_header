@@ -1,0 +1,7 @@
+Index,Return Type,Function Name,Argument_1,Argument_2,Argument_3,Argument_4
+IDX0,void,GPIO_setupPinDirection,uint8 port_num, uint8 pin_num, GPIO_PinDirectionType direction
+IDX1,void,GPIO_writePin,uint8 port_num, uint8 pin_num, uint8 value
+IDX2,uint8,GPIO_readPin,uint8 port_num, uint8 pin_num
+IDX3,void,GPIO_setupPortDirection,uint8 port_num, GPIO_PortDirectionType direction
+IDX4,void,GPIO_writePort,uint8 port_num, uint8 value
+IDX5,uint8,GPIO_readPort,uint8 port_num
