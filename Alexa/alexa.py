@@ -5,6 +5,7 @@ import playsound
 from gtts import gTTS
 import speech_recognition as sr
 import pyautogui
+import sys
 
 
 
@@ -83,7 +84,11 @@ class Alexa():
     def Alexa_Open_GIT(self):
         webbrowser.get('firefox').open("https://github.com/Omar-Talaat11")
         
-        
+    def Alexa_Bye(self):
+        self.text_to_sound(" مع السلامة يا عمر","my_file.mp3")
+        self.Alexa_Speak("my_file.mp3")
+        os.system("rm my_file.mp3")
+        sys.exit()
         
         
         
@@ -113,6 +118,9 @@ class Alexa():
             
         if(self.find_words(["افتح"],speech) and self.find_words(["جيت","جيتهب"],speech)):
             self.Alexa_Open_GIT()
+            
+        if(self.find_words(["سلام","مع السلامة"],speech)):
+            self.Alexa_Bye()
     
 
         
